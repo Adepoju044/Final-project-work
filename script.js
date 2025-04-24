@@ -28,21 +28,68 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('year-label').classList.remove('text-red-400');
   }
 
-  day.addEventListener('input', () => {
+  function validateInputs() {
+    let isValid = true;
+    const dayVal = parseInt(day.value);
+    const monthVal = parseInt(month.value);
+    const yearVal = parseInt(year.value);
+    const currentYear = dataDate.getFullYear();
+
     resetBorders();
     errorDay.innerText = '';
+    errorMonth.innerText = '';
+    errorYear.innerText = '';
+
+    if (day.value) {
+      if (dayVal < 1 || dayVal > 31) {
+        errorDay.innerText = 'Must be a valid Day';
+        day.style.borderColor = 'red';
+        document.getElementById('day-label').classList.add('text-red-400');
+        isValid = false;
+      } else if (month.value && year.value) {
+        const daysInMonth = new Date(yearVal, monthVal, 0).getDate();
+        if (dayVal > daysInMonth) {
+          errorDay.innerText = 'Must be a valid date';
+          day.style.borderColor = 'red';
+          document.getElementById('day-label').classList.add('text-red-400');
+          isValid = false;
+        }
+      }
+    }
+
+    if (month.value) {
+      if (monthVal < 1 || monthVal > 12) {
+        errorMonth.innerText = 'Must be a valid Month';
+        month.style.borderColor = 'red';
+        document.getElementById('month-label').classList.add('text-red-400');
+        isValid = false;
+      }
+    }
+
+    if (year.value) {
+      if (yearVal > currentYear) {
+        errorYear.innerText = "Must be in the past";
+        year.style.borderColor = 'red';
+        document.getElementById('year-label').classList.add('text-red-400');
+        isValid = false;
+      }
+    }
+
+    return isValid;
+  }
+
+  day.addEventListener('input', () => {
+    validateInputs();
     focusNext();
   });
 
   month.addEventListener('input', () => {
-    resetBorders();
-    errorMonth.innerText = '';
+    validateInputs();
     focusNext();
   });
 
   year.addEventListener('input', () => {
-    resetBorders();
-    errorYear.innerText = '';
+    validateInputs();
   });
 
   arrowIcon.addEventListener('click', (e) => {
@@ -75,33 +122,9 @@ document.addEventListener('DOMContentLoaded', () => {
          document.getElementById('year-label').classList.add('text-red-400');
         hasError = true;
       };
-    } else if (yearVal > dataDate.getFullYear()) {
+    } else if (validateInputs() === false) {
       e.preventDefault();
-      errorYear.innerText = "Must be in the past";
-      year.style.borderColor = 'red';
-      document.getElementById('year-label').classList.add('text-red-400');
       hasError = true;
-    } else if (monthVal < 1 || monthVal > 12) {
-      e.preventDefault();
-      errorMonth.innerText = 'Must be a valid Month';
-      month.style.borderColor = 'red';
-      document.getElementById('month-label').classList.add('text-red-400');
-      hasError = true;
-    } else if (dayVal < 1 || dayVal > 31) {
-      e.preventDefault();
-      errorDay.innerText = 'Must be a valid Day';
-      day.style.borderColor = 'red';
-      document.getElementById('day-label').classList.add('text-red-400');
-      hasError = true;
-    } else {
-      const daysInMonth = new Date(yearVal, monthVal, 0).getDate();
-      if (dayVal > daysInMonth) {
-        e.preventDefault();
-        errorDay.innerText = 'Must be a valid date';
-        day.style.borderColor = 'red';
-        document.getElementById('day-label').classList.add('text-red-400');
-        hasError = true;
-      }
     }
 
     if (!hasError){
