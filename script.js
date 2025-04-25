@@ -34,7 +34,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const monthVal = parseInt(month.value);
     const yearVal = parseInt(year.value);
     const currentYear = dataDate.getFullYear();
-
     resetBorders();
     errorDay.innerText = '';
     errorMonth.innerText = '';
@@ -65,7 +64,6 @@ document.addEventListener('DOMContentLoaded', () => {
         isValid = false;
       }
     }
-
     if (year.value) {
       if (yearVal > currentYear) {
         errorYear.innerText = "Must be in the past";
