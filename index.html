@@ -7,8 +7,12 @@
         <link rel="icon" type="image/png" sizes="32x32" href="./assets/images/favicon-32x32.png" />
         <link rel="stylesheet" href="./src/output.css" />
     </head>
-    <body class="bg-gray-200 min-h-screen flex items-center justify-center p-4 overflow-hidden">
-        <div class="bg-white h-full rounded-2xl rounded-br-[80px] shadow-lg w-full max-w-md p-8">
+    <body class="bg-gray-200 relative overflow-hidden">
+        <div class="min-h-screen flex-row items-center justify-center">
+            <div
+                class="container h-full bg-white rounded-2xl rounded-br-[80px] shadow-lg w-full max-w-md p-8 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+            >
+
             <div class="flex gap-2 md:gap-3 mb-8">
                 <div class="flex-1">
                     <label
@@ -121,6 +125,7 @@
                     </div>
                 </div>
             </div>
+        </div>
         </div>
         <script src="script.js"></script>
     </body>
